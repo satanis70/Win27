@@ -1,13 +1,13 @@
 package com.example.win27
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.example.win27.databinding.ActivityRealQuizBinding
-import com.example.win27.model.RealModel
+import com.example.win27.model.BarcelonaModel
+import com.example.win27.model.ManchesterModel
 import com.example.win27.services.QuizApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,12 +16,13 @@ import retrofit2.Retrofit
 import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RealActivityQuiz : AppCompatActivity() {
+class ManchesterActivityQuiz: AppCompatActivity() {
 
     private lateinit var binding: ActivityRealQuizBinding
-    private var listQuestion = ArrayList<RealModel>()
+    private var listQuestion = ArrayList<ManchesterModel>()
     private var currentPosition = 0
     private var answers = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRealQuizBinding.inflate(layoutInflater)
@@ -29,12 +30,12 @@ class RealActivityQuiz : AppCompatActivity() {
         SetBackgroundImage.setImage(binding.constraintLayoutReal, this)
         showData(currentPosition)
         binding.buttonNext.setOnClickListener {
-            currentPosition+=1
-            if (listQuestion[0].realmadrid.size==currentPosition){
+            currentPosition += 1
+            if (listQuestion[0].manchester.size == currentPosition) {
                 val sharedPrefCapital = this.getSharedPreferences("score", Context.MODE_PRIVATE)
                 sharedPrefCapital.edit {
                     putString("score", answers.toString())
-                    putString("size", listQuestion[0].realmadrid.size.toString())
+                    putString("size", listQuestion[0].manchester.size.toString())
                 }
                 startActivity(Intent(this, OutcomeActivity::class.java))
                 finish()
@@ -44,20 +45,20 @@ class RealActivityQuiz : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun showData(_currentPosition: Int) {
         listQuestion.clear()
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.IO).launch {
             val api = Retrofit.Builder()
                 .baseUrl("http://49.12.202.175/win27/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(QuizApi::class.java)
-            val response = api.getReal().awaitResponse()
-            if (response.isSuccessful){
+            val response = api.getManchester().awaitResponse()
+            if (response.isSuccessful) {
                 listQuestion.add(response.body()!!)
-                launch(Dispatchers.Main){
-                    binding.tvScore.text = "${currentPosition+1}/${listQuestion[0].realmadrid.size}"
+                launch(Dispatchers.Main) {
+                    binding.tvScore.text =
+                        "${currentPosition + 1}/${listQuestion[0].manchester.size}"
                     val tvQuestion = binding.tvQuestion
                     val btnAnswer1 = binding.buttonAnswer1
                     val btnAnswer2 = binding.buttonAnswer2
@@ -72,14 +73,14 @@ class RealActivityQuiz : AppCompatActivity() {
                     btnAnswer3.setBackgroundResource(R.drawable.round_button)
                     btnAnswer4.setBackgroundResource(R.drawable.round_button)
                     val btnNext = binding.buttonNext
-                    tvQuestion.text = listQuestion[0].realmadrid[_currentPosition].question
-                    btnAnswer1.text = listQuestion[0].realmadrid[_currentPosition].answer1.name
-                    btnAnswer2.text = listQuestion[0].realmadrid[_currentPosition].answer2.name
-                    btnAnswer3.text = listQuestion[0].realmadrid[_currentPosition].answer3.name
-                    btnAnswer4.text = listQuestion[0].realmadrid[_currentPosition].answer4.name
+                    tvQuestion.text = listQuestion[0].manchester[_currentPosition].question
+                    btnAnswer1.text = listQuestion[0].manchester[_currentPosition].answer1.name
+                    btnAnswer2.text = listQuestion[0].manchester[_currentPosition].answer2.name
+                    btnAnswer3.text = listQuestion[0].manchester[_currentPosition].answer3.name
+                    btnAnswer4.text = listQuestion[0].manchester[_currentPosition].answer4.name
                     btnAnswer1.setOnClickListener {
-                        if (listQuestion[0].realmadrid[_currentPosition].answer1.trueorfalse=="true"){
-                            answers+=1
+                        if (listQuestion[0].manchester[_currentPosition].answer1.trueorfalse == "true") {
+                            answers += 1
                             btnAnswer1.setBackgroundResource(R.drawable.round_button_true)
                             btnAnswer1.isEnabled = false
                             btnAnswer2.isEnabled = false
@@ -96,8 +97,8 @@ class RealActivityQuiz : AppCompatActivity() {
                         }
                     }
                     btnAnswer2.setOnClickListener {
-                        if (listQuestion[0].realmadrid[_currentPosition].answer2.trueorfalse=="true"){
-                            answers+=1
+                        if (listQuestion[0].manchester[_currentPosition].answer2.trueorfalse == "true") {
+                            answers += 1
                             btnAnswer2.setBackgroundResource(R.drawable.round_button_true)
                             btnAnswer1.isEnabled = false
                             btnAnswer2.isEnabled = false
@@ -114,8 +115,8 @@ class RealActivityQuiz : AppCompatActivity() {
                         }
                     }
                     btnAnswer3.setOnClickListener {
-                        if (listQuestion[0].realmadrid[_currentPosition].answer3.trueorfalse=="true"){
-                            answers+=1
+                        if (listQuestion[0].manchester[_currentPosition].answer3.trueorfalse == "true") {
+                            answers += 1
                             btnAnswer3.setBackgroundResource(R.drawable.round_button_true)
                             btnAnswer1.isEnabled = false
                             btnAnswer2.isEnabled = false
@@ -132,8 +133,8 @@ class RealActivityQuiz : AppCompatActivity() {
                         }
                     }
                     btnAnswer4.setOnClickListener {
-                        if (listQuestion[0].realmadrid[_currentPosition].answer4.trueorfalse=="true"){
-                            answers+=1
+                        if (listQuestion[0].manchester[_currentPosition].answer4.trueorfalse == "true") {
+                            answers += 1
                             btnAnswer4.setBackgroundResource(R.drawable.round_button_true)
                             btnAnswer1.isEnabled = false
                             btnAnswer2.isEnabled = false
@@ -151,7 +152,6 @@ class RealActivityQuiz : AppCompatActivity() {
                     }
                 }
             }
-
         }
     }
 }

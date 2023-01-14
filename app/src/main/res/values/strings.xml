@@ -2,4 +2,8 @@
     <string name="app_name">Win27</string>
     <string name="real_madrid_quiz">Real Madrid Quiz</string>
     <string name="next">Next</string>
+    <string name="exit">Exit</string>
+    <string name="fc_barcelona_quiz">FC Barcelona Quiz</string>
+    <string name="manchester_united_quiz">Manchester United Quiz</string>
+    <string name="notifications">Notifications</string>
 </resources>

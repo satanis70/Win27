@@ -15,15 +15,17 @@
         android:layout_marginTop="36dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent">
+    </TextView>
 
     <TextView
         android:id="@+id/tv_question"
         android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +76,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/next"
+        android:enabled="false"
         android:background="@drawable/round_button_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

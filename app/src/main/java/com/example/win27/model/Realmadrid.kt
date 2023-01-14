@@ -1,8 +1,10 @@
 package com.example.win27.model
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class Realmadrid(
     @SerializedName("answer1")
     val answer1: Answer1,
